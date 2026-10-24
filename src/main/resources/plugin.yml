@@ -1,0 +1,45 @@
+name: RaporX
+version: '1.0.0'
+main: com.raporx.RaporX
+api-version: '1.21'
+description: GUI destekli oyuncu rapor sistemi (Discord webhook, hile kaaniti, admin panel)
+authors: [RaporX]
+
+commands:
+  rapor:
+    description: Bir oyuncuyu raporla
+    aliases: [report]
+    usage: /rapor [oyuncu] [sebep]
+  raporadmin:
+    description: Rapor yonetim paneli
+    aliases: [radmin, raporpanel]
+    usage: /raporadmin [panel|ac|liste|gecmis|flag|ayarlar|reload|test]
+
+permissions:
+  rapor.use:
+    description: Oyuncu raporlayabilir
+    default: true
+  rapor.admin:
+    description: Rapor panelini kullanir
+    default: op
+  rapor.notify:
+    description: Yeni rapor bildirimlerini gorur
+    default: op
+  rapor.punish:
+    description: Panelden ceza verebilir
+    default: op
+  rapor.teleport:
+    description: Panelden raporlanan oyuncuya isinlanabilir
+    default: op
+  rapor.settings:
+    description: Ayarlar ve kategori duzenleme GUI'si
+    default: op
+  rapor.flag:
+    description: Anti-cheat flag komutunu kullanir
+    default: op
+  rapor.bypass:
+    description: Bu yetkiye sahip oyuncular raporlanamaz
+    default: false
+  rapor.cooldown.bypass:
+    description: Rapor bekleme suresi ve limitlerini asar
+    default: op

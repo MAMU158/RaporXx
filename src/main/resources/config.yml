@@ -1,0 +1,203 @@
+# ============================================================
+#  RaporX - ayarlar
+#  Çoğu ayarı oyun içinden de değiştirebilirsin: /raporadmin ayarlar
+# ============================================================
+
+# Discord embed altında ve bildirimlerde görünen sunucu adı
+server-name: "Sunucu"
+
+style:
+  # Menü başlık ve buton yazılarını küçük büyük harf (small caps) yapar
+  small-caps: true
+
+report:
+  cooldown-seconds: 60        # iki rapor arası bekleme
+  max-per-hour: 5             # oyuncu başına saatlik rapor limiti (0 = sınırsız)
+  duplicate-minutes: 30       # aynı kişiyi aynı oyuncu tekrar raporlayamaz
+  min-reason-length: 5        # "sebep zorunlu" kategorilerde en az karakter
+  max-reason-length: 200
+  quick-category: diger       # /rapor <oyuncu> <sebep> ile açılan kategori
+
+logging:
+  history-size: 50            # her oyuncu için saklanan son mesaj sayısı
+  log-commands: true          # komutlar da geçmişe yazılsın (özel mesaj vb.)
+  prune-interval-minutes: 10
+  # Bu komutlar ASLA kaydedilmez (şifre sızıntısını önlemek için)
+  command-blacklist:
+    - login
+    - l
+    - register
+    - reg
+    - password
+    - changepassword
+    - cp
+    - unregister
+    - 2fa
+    - totp
+    - authme
+
+discord:
+  enabled: false
+  webhook-url: ""             # https://discord.com/api/webhooks/...
+  cheat-webhook-url: ""       # boş bırakılırsa hile raporları da ana webhook'a gider
+  username: "RaporX"
+  avatar-url: ""
+  mention-role-id: ""         # etiketlenecek rol ID'si (boş = etiket yok)
+  mention-only-cheat: true    # sadece hile raporlarında etiketle
+  show-head: true             # raporlanan oyuncunun kafasını embed'e koy
+  embed-chat-lines: 8         # embed içinde gösterilecek son mesaj sayısı
+  send-chat-file: true        # son 50 mesajı .txt dosyası olarak ekle
+  notify-actions: true        # ceza / çözüldü / reddedildi işlemlerini de gönder
+  title: "🚨 Yeni Rapor #{id}"
+  colors:
+    default: "#FFD166"
+    cheat-high: "#FF4D4D"
+    cheat-low: "#FF9F43"
+    cheat-none: "#9AA0A6"
+    resolved: "#2ECC71"
+    rejected: "#7F8C8D"
+
+notify:
+  staff-sound: true
+  join-summary: true          # yetkili girince açık rapor sayısını göster
+
+# Hile koruması (anti-cheat) bağlantısı
+anticheat:
+  attach-flags-minutes: 30    # rapor anında son X dakikadaki flag'ler rapora eklenir
+  high-vl: 20                 # toplam VL bunu geçerse kanıt "güçlü" sayılır
+  retention-days: 30
+  auto-report:
+    enabled: false            # flag'ler eşiği geçerse otomatik rapor aç
+    window-minutes: 5
+    vl-threshold: 30
+    cooldown-minutes: 15
+    category: hile
+
+# Panelden verilebilen cezalar. Komutlar konsoldan çalışır, oyuncu çevrimdışı olsa da.
+# Yer tutucular: %player% %uuid% %reason% %category% %id% %admin%
+# Kendi ceza pluginine göre (LiteBans, AdvancedBan, EssentialsX...) komutları düzenle.
+punishments:
+  default-reason: "%category% - Rapor #%id%"
+  list:
+    uyari:
+      name: "&#FFD166Uyarı"
+      icon: PAPER
+      lore:
+        - "&7Oyuncuya uyarı mesajı gönderir"
+      commands:
+        - "tell %player% [Uyarı] %reason%"
+    mute-1s:
+      name: "&#FF9F43Susturma &7(1 saat)"
+      icon: NAME_TAG
+      lore:
+        - "&7Sohbet susturması"
+      commands:
+        - "mute %player% 1h %reason%"
+    mute-1g:
+      name: "&#FF9F43Susturma &7(1 gün)"
+      icon: NAME_TAG
+      lore:
+        - "&7Sohbet susturması"
+      commands:
+        - "mute %player% 1d %reason%"
+    kick:
+      name: "&#FF7675At"
+      icon: LEATHER_BOOTS
+      lore:
+        - "&7Oyuncuyu sunucudan atar"
+      commands:
+        - "kick %player% %reason%"
+    ban-1g:
+      name: "&#FF4D4DYasak &7(1 gün)"
+      icon: BARRIER
+      lore:
+        - "&7Geçici yasak"
+      commands:
+        - "tempban %player% 1d %reason%"
+    ban-7g:
+      name: "&#FF4D4DYasak &7(7 gün)"
+      icon: BARRIER
+      lore:
+        - "&7Geçici yasak"
+      commands:
+        - "tempban %player% 7d %reason%"
+    ban-30g:
+      name: "&#FF4D4DYasak &7(30 gün)"
+      icon: BARRIER
+      lore:
+        - "&7Geçici yasak"
+      commands:
+        - "tempban %player% 30d %reason%"
+    ban-kalici:
+      name: "&#B71C1CKalıcı Yasak"
+      icon: TNT
+      lore:
+        - "&7Kalıcı yasak"
+      commands:
+        - "ban %player% %reason%"
+
+# Rapor kategorileri. Oyun içinden de düzenlenebilir: /raporadmin ayarlar > Kategoriler
+# cheat: true olan kategoride alt türler (types) seçtirilir ve anti-cheat kanıtı aranır
+categories:
+  hile:
+    name: "&#FF4D4DHile / Hack"
+    icon: ENDER_EYE
+    enabled: true
+    cheat: true
+    require-reason: false
+    lore:
+      - "&7KillAura, Fly, Speed, X-Ray gibi"
+      - "&7hile kullanan oyuncular"
+    types:
+      - KillAura
+      - Fly
+      - Speed
+      - Reach
+      - X-Ray
+      - AutoClicker
+      - Velocity (Anti-KB)
+      - Scaffold / Nuker
+      - Diğer Hile
+  hakaret:
+    name: "&#FF9F43Küfür / Hakaret"
+    icon: NAME_TAG
+    enabled: true
+    cheat: false
+    require-reason: false
+    lore:
+      - "&7Sohbette küfür, hakaret"
+      - "&7veya taciz"
+  spam:
+    name: "&#FFD166Spam / Reklam"
+    icon: OAK_SIGN
+    enabled: true
+    cheat: false
+    require-reason: false
+    lore:
+      - "&7Sohbet spamı ve"
+      - "&7başka sunucu reklamı"
+  bug:
+    name: "&#2ECC71Bug Suistimali"
+    icon: SPIDER_EYE
+    enabled: true
+    cheat: false
+    require-reason: true
+    lore:
+      - "&7Bug veya açık kullanımı"
+  grief:
+    name: "&#E17055Griefing / Hırsızlık"
+    icon: TNT
+    enabled: true
+    cheat: false
+    require-reason: true
+    lore:
+      - "&7Yapı bozma, sandık"
+      - "&7hırsızlığı"
+  diger:
+    name: "&#74B9FFDiğer"
+    icon: BOOK
+    enabled: true
+    cheat: false
+    require-reason: true
+    lore:
+      - "&7Listede olmayan durumlar"

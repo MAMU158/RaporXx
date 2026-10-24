@@ -1,0 +1,439 @@
+# ============================================================
+#  RaporX - mesajlar
+#  "menu.*" yazıları config'teki style.small-caps açıkken otomatik
+#  ꜱᴍᴀʟʟ ᴄᴀᴘꜱ olur. Renk: &a veya hex &#RRGGBB. Yer tutucular {böyle}.
+# ============================================================
+
+prefix: "&#FF4D4D&lRapor &8» &7"
+
+status:
+  all: "Tümü"
+  open: "Açık"
+  resolved: "Çözüldü"
+  rejected: "Reddedildi"
+
+# Discord embed başlıkları (renk kodsuz yazılır)
+discord:
+  target: "Raporlanan"
+  reporter: "Raporlayan"
+  category: "Kategori"
+  reason: "Sebep"
+  evidence: "Hile Koruması Kanıtı"
+  state: "Rapor Anındaki Durum"
+  chat: "Son Mesajlar ({count} kayıt)"
+  no-chat: "Bu oyuncuya ait mesaj kaydı yok."
+  action-title: "Rapor #{id} güncellendi"
+  handler: "İşlemi Yapan"
+  status: "Durum"
+  punishment: "Ceza"
+  note: "Not"
+  test-title: "RaporX test mesajı"
+  test-description: "Webhook bağlantısı çalışıyor ✅"
+
+msg:
+  # --- komutlar
+  no-permission: "&cBu işlem için yetkin yok."
+  players-only: "&cBu komut sadece oyun içinde kullanılır."
+  usage-rapor: "&7Kullanım: &f/rapor &7veya &f/rapor <oyuncu> [sebep]"
+  usage-admin: "&7Kullanım: &f/raporadmin [panel|ac <id>|liste|gecmis <oyuncu>|flag <oyuncu> <kontrol> <vl> [detay]|ayarlar|reload|test]"
+  usage-flag: "&7Kullanım: &f/raporadmin flag <oyuncu> <kontrol> <vl> [detay]"
+  usage-history: "&7Kullanım: &f/raporadmin gecmis <oyuncu>"
+  usage-open: "&7Kullanım: &f/raporadmin ac <rapor numarası>"
+  invalid-number: "&c'{value}' geçerli bir sayı değil."
+  reloaded: "&aAyarlar ve mesajlar yeniden yüklendi."
+  load-failed: "&cVeriler yüklenirken hata oluştu, konsola bak."
+  report-not-found: "&c#{id} numaralı rapor bulunamadı."
+  player-not-found: "&c'{player}' adlı oyuncu daha önce sunucuya girmemiş."
+  list-header: "&7Son raporlar (&f{count}&7):"
+  list-line: "&8#&f{id} &7{reporter} &8→ &f{target} &8| &7{category} &8| &7{status}"
+  list-empty: "&7Gösterilecek rapor yok."
+
+  # --- rapor gönderme
+  self-report: "&cKendini raporlayamazsın."
+  target-immune: "&c{player} raporlanamaz."
+  invalid-category: "&cGeçersiz kategori."
+  reason-required: "&cBu kategori için en az {min} karakterlik bir sebep yazmalısın."
+  cooldown: "&cBir sonraki raporu {seconds} saniye sonra gönderebilirsin."
+  hourly-limit: "&cSaatlik rapor limitine ulaştın (en fazla {max})."
+  duplicate: "&c{player} oyuncusunu kısa süre önce zaten raporladın."
+  report-failed: "&cRapor kaydedilemedi, lütfen tekrar dene."
+  report-sent: "&a#{id} numaralı raporun yetkililere iletildi. &7({player})"
+
+  # --- sohbetten giriş
+  input-cancel-hint: "&8İptal etmek için &7iptal &8yaz. (60 saniye)"
+  input-expired: "&cSüre doldu, işlem iptal edildi."
+  input-cancelled: "&7İşlem iptal edildi."
+  input-offline-name: "&eRaporlamak istediğin oyuncunun adını sohbete yaz:"
+  input-reason: "&eRapor sebebini sohbete yaz:"
+  input-note: "&eRapora eklenecek notu sohbete yaz:"
+  input-punish-reason: "&eCeza sebebini sohbete yaz:"
+  input-webhook: "&eDiscord webhook adresini yaz &8(silmek için - yaz)&e:"
+  input-category-id: "&eYeni kategori kimliğini yaz &8(küçük harf, rakam, - ve _)&e:"
+  input-category-name: "&eKategori adını yaz &8(renk: &#FF0000 veya &c)&e:"
+  input-category-types: "&eAlt türleri virgülle ayırarak yaz &8(örn: KillAura, Fly, Speed)&e:"
+
+  # --- yetkili bildirimleri
+  staff-alert: "&e#{id} &7yeni rapor: &f{target} &8| &7{category} &8| &7raporlayan: &f{reporter}"
+  staff-alert-button: "&#FFD166&l[ Raporu Aç #{id} ]"
+  join-summary: "&e{count} &7adet açık rapor seni bekliyor. &f/raporadmin"
+  evidence-high: "&c⚠ Hile koruması: {count} kayıt, toplam VL {vl} &7(en çok: &f{check}&7) &8- güçlü kanıt"
+  evidence-low: "&6Hile koruması: {count} kayıt, toplam VL {vl} &7(en çok: &f{check}&7) &8- zayıf kanıt"
+  evidence-none: "&7Hile koruması: bu oyuncu için kayıt yok &8- kanıt yok"
+  auto-reporter-name: "Hile Koruması"
+  auto-reason: "Son {minutes} dakikada toplam VL {vl} (en çok: {check})"
+  info-offline: "Rapor anında çevrimdışı"
+  info-online: "Çevrimiçi | Dünya: {world} ({x}, {y}, {z}) | Ping: {ping}ms | Mod: {mode}"
+
+  # --- rapor sahibine sonuç
+  reporter-resolved: "&a#{id} numaralı raporun ({player}) incelendi ve çözüldü. Teşekkürler!"
+  reporter-punished: "&a#{id} numaralı raporun ({player}) incelendi ve oyuncuya ceza verildi. Teşekkürler!"
+  reporter-rejected: "&7#{id} numaralı raporun ({player}) incelendi, işlem yapılmadı."
+
+  # --- yetkili işlemleri
+  teleported: "&a{player} oyuncusunun yanına ışınlandın."
+  punish-missing: "&cBu ceza ayarlarda bulunamadı."
+  punish-self: "&cKendine ceza veremezsin."
+  punish-bad-name: "&c'{player}' adı güvenli değil, ceza uygulanmadı."
+  punish-applied: "&a{player} oyuncusuna uygulandı: &f{punishment}"
+  history-header: "&7{player} &8- &7son {count} mesaj/komut:"
+  history-line: "&8[{time}] &f{message}"
+  flag-added: "&a{player} için flag kaydedildi: {check} (VL {vl})"
+
+  # --- ayarlar
+  webhook-testing: "&7Test mesajı gönderiliyor..."
+  webhook-ok: "&aWebhook çalışıyor, Discord'a bak."
+  webhook-fail: "&cWebhook çalışmadı (kod: {code}). Adresi ve discord.enabled ayarını kontrol et."
+  webhook-saved: "&aWebhook adresi kaydedildi."
+  webhook-cleared: "&7Webhook adresi silindi."
+  webhook-invalid: "&cGeçersiz webhook adresi. https://discord.com/api/webhooks/... biçiminde olmalı."
+  category-bad-id: "&cKimlik 2-20 karakter olmalı: küçük harf, rakam, - veya _"
+  category-exists: "&c'{id}' kategorisi zaten var."
+  category-created: "&a'{id}' kategorisi oluşturuldu, şimdi düzenleyebilirsin."
+  category-icon-hint: "&7İkonu değiştirmek için envanterinden bir eşya al ve imleçle bu düğmeye tıkla."
+  category-delete-hint: "&7Silmek için &fSHIFT + tık &7yap."
+  category-last: "&cSon kategoriyi silemezsin."
+  category-deleted: "&7'{id}' kategorisi silindi."
+
+menu:
+  common:
+    close:
+      name: "&#FF4D4DKapat"
+      lore:
+        - "&7Menüyü kapatır"
+    back:
+      name: "&#FFD166Geri"
+      lore:
+        - "&7Önceki menüye döner"
+    empty:
+      name: "&#9AA0A6Burada gösterilecek bir şey yok"
+      lore: []
+    prev:
+      name: "&#74B9FFÖnceki Sayfa"
+      lore: []
+    next:
+      name: "&#74B9FFSonraki Sayfa"
+      lore: []
+    page:
+      name: "&#FFFFFFSayfa {page}/{pages}"
+      lore: []
+
+  player-select:
+    title: "&#FF4D4DOyuncu Raporla"
+    head:
+      name: "&#FFFFFF{player}"
+      lore:
+        - "&7Bu oyuncuyu raporlamak için"
+        - "&#FFD166tıkla"
+    offline:
+      name: "&#74B9FFÇevrimdışı Oyuncu"
+      lore:
+        - "&7Oyunda olmayan bir oyuncuyu"
+        - "&7adıyla raporla"
+    mine:
+      name: "&#2ECC71Raporlarım"
+      lore:
+        - "&7Gönderdiğin raporları ve"
+        - "&7sonuçlarını gör"
+
+  category:
+    title: "&#FF4D4DKategori » {player}"
+    click: "&#FFD166Seçmek için tıkla"
+    click-types: "&#FFD166Alt tür seçmek için tıkla"
+
+  subtype:
+    title: "&#FF4D4DHile Türü » {player}"
+    item:
+      name: "&#FF4D4D{type}"
+      lore:
+        - "&7Bu hile türünü seç"
+
+  confirm:
+    title: "&#FF4D4DRaporu Onayla"
+    summary:
+      name: "&#FFFFFF{player}"
+      lore:
+        - " "
+        - "&#9AA0A6Kategori: &f{category}"
+        - "&#9AA0A6Tür: &f{type}"
+        - "&#9AA0A6Sebep: &f{reason}"
+    reason:
+      name: "&#74B9FFSebep Yaz"
+      lore:
+        - "&7Sohbete rapor sebebini yazarsın"
+    accept:
+      name: "&#2ECC71Raporu Gönder"
+      lore:
+        - "&7Rapor yetkililere iletilir"
+    cancel:
+      name: "&#FF4D4DVazgeç"
+      lore:
+        - "&7Raporu göndermeden kapatır"
+
+  my-reports:
+    title: "&#2ECC71Raporlarım"
+    item:
+      name: "&#FFFFFF#{id} &8- &f{target}"
+      lore:
+        - "&#9AA0A6Kategori: &f{category}"
+        - "&#9AA0A6Durum: &f{status}"
+        - "&#9AA0A6Ceza: &f{punishment}"
+        - "&#9AA0A6Zaman: &f{time}"
+
+  admin:
+    title: "&#FF4D4DRapor Paneli » {filter}"
+    item:
+      name: "&#FFD166#{id} &8- &f{target}"
+      lore:
+        - "&#9AA0A6Raporlayan: &f{reporter}"
+        - "&#9AA0A6Kategori: &f{category}"
+        - "&#9AA0A6Sebep: &f{reason}"
+        - "&#9AA0A6Durum: &f{status}"
+        - "&#9AA0A6Zaman: &f{time}"
+        - "&#9AA0A6Kanıt: {evidence}"
+        - " "
+        - "&#FFD166Detay için tıkla"
+    filter:
+      name: "&#74B9FFFiltre: &f{filter}"
+      lore:
+        - "&7Açık, çözüldü, reddedildi ve"
+        - "&7tümü arasında geçiş yapar"
+    refresh:
+      name: "&#2ECC71Yenile"
+      lore:
+        - "&7Listeyi yeniden yükler"
+    settings:
+      name: "&#FFD166Ayarlar"
+      lore:
+        - "&7Webhook, limitler, kategoriler"
+
+  detail:
+    title: "&#FF4D4DRapor #{id}"
+    summary:
+      name: "&#FFD166#{id} &8- &f{target}"
+      lore:
+        - "&#9AA0A6Raporlayan: &f{reporter}"
+        - "&#9AA0A6Kategori: &f{category}"
+        - "&#9AA0A6Sebep: &f{reason}"
+        - "&#9AA0A6Tarih: &f{time}"
+        - "&#9AA0A6Durum: &f{status}"
+        - "&#9AA0A6İşlem yapan: &f{handler}"
+        - "&#9AA0A6Not: &f{note}"
+        - "&#9AA0A6Ceza: &f{punishment}"
+        - "&#9AA0A6Bu oyuncuya toplam rapor: &f{total}"
+        - "&#9AA0A6Rapor anı: &f{info}"
+        - "&#9AA0A6Kanıt: {evidence}"
+    chat:
+      name: "&#74B9FFSon Mesajlar ({count})"
+      lore:
+        - "&7Sol tık: rapor anındaki kayıt"
+        - "&7Sağ tık: şu anki güncel kayıt"
+        - "&7(oyuncu çevrimdışı olsa da görünür)"
+    flags:
+      name: "&#FF4D4DHile Koruması Kayıtları ({count})"
+      lore:
+        - "&7Sol tık: rapor anındaki kayıtlar"
+        - "&7Sağ tık: bu oyuncunun tüm kayıtları"
+    teleport:
+      name: "&#B197FCOyuncuya Işınlan"
+      lore:
+        - "&7Oyuncunun yanına gidersin"
+    teleport-off:
+      name: "&#9AA0A6Işınlanma kullanılamıyor"
+      lore:
+        - "&7Oyuncu çevrimdışı veya yetkin yok"
+    punish:
+      name: "&#FF4D4DCeza Ver"
+      lore:
+        - "&7Oyuncu oyunda olmasa bile"
+        - "&7ceza uygulanır"
+    resolve:
+      name: "&#2ECC71Çözüldü Olarak İşaretle"
+      lore:
+        - "&7Sol tık: hemen işaretle"
+        - "&7Sağ tık: not yazarak işaretle"
+    reject:
+      name: "&#FF9F43Reddet"
+      lore:
+        - "&7Sol tık: hemen reddet"
+        - "&7Sağ tık: not yazarak reddet"
+    reopen:
+      name: "&#74B9FFYeniden Aç"
+      lore:
+        - "&7Raporu tekrar açık yapar"
+
+  chat:
+    title: "&#74B9FFMesajlar » {player}"
+    item:
+      name: "&#9AA0A6[{time}]"
+      lore: "&f{message}"
+    print:
+      name: "&#2ECC71Sohbete Yazdır"
+      lore:
+        - "&7Kayıtları sohbet penceresine yazar"
+
+  flags:
+    title: "&#FF4D4DHile Kayıtları » {player}"
+    item:
+      name: "&#FF4D4D{check}"
+      lore:
+        - "&#9AA0A6VL: &f{vl}"
+        - "&#9AA0A6Zaman: &f{time} &8({clock})"
+        - "&#9AA0A6Detay: &f{details}"
+
+  punish:
+    title: "&#FF4D4DCeza » {player}"
+    select: "&#FFD166Seçmek için tıkla"
+    selected: "&#2ECC71✔ Seçili"
+    reason:
+      name: "&#74B9FFCeza Sebebi"
+      lore:
+        - "&#9AA0A6Şu an: &f{reason}"
+        - " "
+        - "&#FFD166Değiştirmek için tıkla"
+    apply:
+      name: "&#2ECC71Cezayı Uygula"
+      lore:
+        - "&#9AA0A6Oyuncu: &f{player}"
+        - "&#9AA0A6Ceza: &f{punishment}"
+        - "&#9AA0A6Sebep: &f{reason}"
+        - " "
+        - "&#FFD166Onaylamak için tıkla"
+    apply-off:
+      name: "&#9AA0A6Önce bir ceza seç"
+      lore: []
+
+  settings:
+    title: "&#FF4D4DRapor Ayarları"
+    state-on: "&#2ECC71● Açık"
+    state-off: "&#FF4D4D● Kapalı"
+    click-toggle: "&#FFD166Değiştirmek için tıkla"
+    value: "&#9AA0A6Değer: &f{value}"
+    click-number: "&#FFD166Sol tık +{step} &8| &#FFD166Sağ tık -{step} &8| &7SHIFT: ×5"
+    discord-enabled:
+      name: "&#74B9FFDiscord Webhook"
+      lore:
+        - "&7Raporlar Discord'a gönderilir"
+    discord-file:
+      name: "&#74B9FFMesaj Dosyası Ekle"
+      lore:
+        - "&7Son 50 mesaj .txt olarak eklenir"
+    webhook-url:
+      name: "&#74B9FFWebhook Adresi"
+      lore:
+        - "&7Tıkla ve adresi sohbete yaz"
+    webhook-test:
+      name: "&#2ECC71Webhook Testi"
+      lore:
+        - "&7Discord'a test mesajı yollar"
+    cooldown:
+      name: "&#FFD166Rapor Bekleme Süresi"
+      lore:
+        - "&7İki rapor arası saniye"
+    max-per-hour:
+      name: "&#FFD166Saatlik Rapor Limiti"
+      lore:
+        - "&70 = sınırsız"
+    log-commands:
+      name: "&#74B9FFKomutları Kaydet"
+      lore:
+        - "&7Mesaj geçmişine komutlar da yazılır"
+        - "&7(giriş/şifre komutları hariç)"
+    small-caps:
+      name: "&#B197FCSmall Caps Yazı"
+      lore:
+        - "&7Menü yazılarını ᴋüçüᴋ ʙüʏüᴋ"
+        - "&7harf yapar"
+    staff-sound:
+      name: "&#FFD166Yetkili Bildirim Sesi"
+      lore:
+        - "&7Yeni raporda ses çalar"
+    auto-report:
+      name: "&#FF4D4DOtomatik Hile Raporu"
+      lore:
+        - "&7Hile koruması flag'leri eşiği"
+        - "&7geçince otomatik rapor açar"
+    auto-threshold:
+      name: "&#FF4D4DOtomatik Rapor Eşiği"
+      lore:
+        - "&7Toplam VL eşiği"
+    categories:
+      name: "&#FFD166Kategoriler"
+      lore:
+        - "&7Kategori ekle, düzenle, sil"
+    reload:
+      name: "&#2ECC71Yeniden Yükle"
+      lore:
+        - "&7config.yml ve messages.yml"
+        - "&7dosyalarını tekrar okur"
+
+  cat-editor:
+    title: "&#FFD166Kategoriler"
+    item:
+      lore:
+        - "&#9AA0A6Kimlik: &f{id}"
+        - "&#9AA0A6Açık: {enabled}"
+        - "&#9AA0A6Hile: {cheat}"
+        - " "
+        - "&#FFD166Düzenlemek için tıkla"
+    new:
+      name: "&#2ECC71Yeni Kategori"
+      lore:
+        - "&7Yeni bir rapor kategorisi ekler"
+
+  cat-edit:
+    title: "&#FFD166Kategori » {id}"
+    icon:
+      name: "&#74B9FFİkon"
+      lore:
+        - "&#9AA0A6Şu an: &f{icon}"
+        - " "
+        - "&#FFD166Eşyayı imlecine al ve buna tıkla"
+    rename:
+      name: "&#74B9FFAdı Değiştir"
+      lore:
+        - "&#9AA0A6Şu an: &f{name}"
+        - " "
+        - "&#FFD166Yeni adı sohbete yazmak için tıkla"
+    enabled:
+      name: "&#2ECC71Açık / Kapalı"
+      lore:
+        - "&7Kapalı kategori menüde görünmez"
+    cheat:
+      name: "&#FF4D4DHile Kategorisi"
+      lore:
+        - "&7Alt tür seçtirilir ve hile"
+        - "&7koruması kanıtı aranır"
+    require-reason:
+      name: "&#FFD166Sebep Zorunlu"
+      lore:
+        - "&7Oyuncu sebep yazmak zorunda"
+    types:
+      name: "&#74B9FFHile Alt Türleri"
+      lore:
+        - "&#9AA0A6Şu an: &f{types}"
+        - " "
+        - "&#FFD166Virgülle yazmak için tıkla"
+    delete:
+      name: "&#FF4D4DKategoriyi Sil"
+      lore:
+        - "&7SHIFT + tık ile silinir"
